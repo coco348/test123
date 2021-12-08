@@ -3,30 +3,39 @@ provider "google" {
   region  = var.region
 }
 
-# Add configuration for remote backend here
+data "google_client_config" "provider" {}
 
-# This data source allows Terraform configuration to use the GCP project defined outside of Terraform
+provider "kubernetes" {
+  host                   = module.my_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(module.my_cluster.cluster.master_auth.0.cluster_ca_certificate)
+  token                  = data.google_client_config.provider.access_token
+}
+
+terraform {
+  backend "gcs" {
+    bucket = "terraform-state-acn-devops-upskilling-gcp"
+    prefix = "terraform/state/terraform-labs-yue"
+  }
+}
+
 data "google_project" "project" {
   project_id = var.project_id
 }
 
-data "google_client_config" "default" {}
-
-
-# Add VPC here
-
-module "my_vpc" {
-  source     = "./modules/vpc"
+module "network" {
+  source     = "./modules/network"
   project_id = data.google_project.project.project_id
-  vpc_name   = var.name
+  name       = var.name
+  region     = var.region
 }
 
-# Add subnet here
-
-module "my_subnet" {
-  source     = "./modules/subnetwork"
-  project_id = data.google_project.project.project_id
-  subnet_name = var.name
-  network = module.my_vpc.vpc.id
-  region = var.region
+module "k8s" {
+  source        = "./modules/k8s"
+  project_id    = data.google_project.project.project_id
+  location      = var.zone
+  cluster_name  = var.name
+  vpc_name      = module.network.vpc.name
+  subnet = module.network.subnet.name
+  gke_num_nodes = var.gke_num_nodes
+ 
 }
