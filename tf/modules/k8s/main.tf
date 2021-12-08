@@ -43,9 +43,9 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 
-#resource "kubernetes_namespace" "namespace" {
-#  for_each = var.namespaces
-#  metadata {
-#    name = each.value
-#  }
-#}
+resource "kubernetes_namespace" "namespace" {
+for_each = var.namespaces
+ metadata {
+ name = each.value
+ }
+}
