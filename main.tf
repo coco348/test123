@@ -62,11 +62,11 @@ resource "kubernetes_namespace" "my_app" {
 }
 
 resource "google_compute_instance" "project" {
-  count = 2
-  name  = "test-${var.name}-${count.index}"
+  count        = 2
+  name         = "test-${var.name}-${count.index}"
   machine_type = "e2-micro"
   zone         = var.zone
-  
+
   tags = ["foo", "bar"]
   boot_disk {
     initialize_params {
@@ -74,7 +74,7 @@ resource "google_compute_instance" "project" {
     }
   }
   network_interface {
-    network    = module.my_vpc.vpc.name
+    network = module.my_vpc.vpc.name
     //subnetwork = "${var.name}-subnetwork"
     access_config {
       // Ephemeral IP
@@ -83,5 +83,15 @@ resource "google_compute_instance" "project" {
   metadata = {
     foo = "bar"
   }
-    //metadata_startup_script = file("script.sh")
+  //metadata_startup_script = file("script.sh")
+  labels = {
+    git_commit           = "5fe101648cd953a25fe192faef87fa280feaa093"
+    git_file             = "main_tf"
+    git_last_modified_at = "2021-12-08-10-06-24"
+    git_last_modified_by = "ybyuan"
+    git_modifiers        = "ybyuan"
+    git_org              = "coco348"
+    git_repo             = "test123"
+    yor_trace            = "ce6467a4-8eda-44ca-bdc4-6b0480382f24"
+  }
 }
