@@ -85,9 +85,9 @@ resource "google_compute_instance" "project" {
   }
   //metadata_startup_script = file("script.sh")
   labels = {
-    git_commit           = "5fe101648cd953a25fe192faef87fa280feaa093"
-    git_file             = "main_tf"
-    git_last_modified_at = "2021-12-08-10-06-24"
+    git_commit           = "59d47eff9dc2a89f11ab50322c9d5007c6e8c249"
+    git_file             = "tf__main_tf"
+    git_last_modified_at = "2021-12-08-10-38-05"
     git_last_modified_by = "ybyuan"
     git_modifiers        = "ybyuan"
     git_org              = "coco348"
