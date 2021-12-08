@@ -1,6 +1,4 @@
 project_id = "acn-devops-upskilling-gcp"
 region     = "europe-west4"
 zone       = "europe-west4-a"
-name       = "yuecoco"
-namespace ="yue_app"
-label="yue-1.0"
+name       = "js-test-yue"

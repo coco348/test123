@@ -3,16 +3,16 @@ variable "project_id" {
   type        = string
 }
 
-variable "region" {
-  description = "Region"
+variable "subnet_name" {
+  description = "name"
   type        = string
 }
 
-variable "zone" {
-  description = "Zone"
+variable "network" {
+  description = "network"
   type        = string
 }
-variable "name" {
-  description = "name"
+variable "region" {
+  description = "region"
   type        = string
 }
